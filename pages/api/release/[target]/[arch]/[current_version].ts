@@ -87,31 +87,31 @@ export default async function handler(
 
 			if (
 				/AppImage\.tar\.gz$/.test(browser_download_url) &&
-				isMacOSPlatform
+				isLinuxPlatform
 			) {
-				macPlatform.url = browser_download_url;
+				linuxPlatform.url = browser_download_url;
 				continue;
 			}
 			if (
 				/AppImage\.tar\.gz\.sig$/.test(browser_download_url) &&
-				isMacOSPlatform
+				isLinuxPlatform
 			) {
 				const { data: signature } = await axios(browser_download_url);
-				macPlatform.signature = signature;
+				linuxPlatform.signature = signature;
 				continue;
 			}
 
-			if (/app\.tar\.gz$/.test(browser_download_url) && isLinuxPlatform) {
-				linuxPlatform.url = browser_download_url;
+			if (/app\.tar\.gz$/.test(browser_download_url) && isMacOSPlatform) {
+				macPlatform.url = browser_download_url;
 				continue;
 			}
 
 			if (
 				/app\.tar\.gz\.sig$/.test(browser_download_url) &&
-				isLinuxPlatform
+				isMacOSPlatform
 			) {
 				const { data: signature } = await axios(browser_download_url);
-				linuxPlatform.signature = signature;
+				macPlatform.signature = signature;
 				continue;
 			}
 		}

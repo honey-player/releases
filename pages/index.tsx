@@ -31,12 +31,14 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 							const url = release.browser_download_url;
 							const isWin = ~url.indexOf(".msi");
 							const isMac = ~url.indexOf(".dmg");
-							const isLinux = ~url.indexOf(".app.tar.gz");
+							const isLinux = ~url.indexOf(".AppImage");
+							const isDeb = ~url.indexOf(".deb");
 
 							if (
 								!/\.msi$/.test(url) &&
 								!/\.dmg$/.test(url) &&
-								!/\.app\.tar\.gz$/.test(url)
+								!/\.deb$/.test(url) &&
+								!/\.AppImage$/.test(url)
 							) {
 								return null;
 							}
@@ -54,16 +56,17 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 												paddingRight: 10,
 											}}
 										>
-											{isWin ? "Win86x64" : ""}
+											{isWin ? "Windows" : ""}
 											{isMac ? "MacOS" : ""}
 											{isLinux ? "Linux" : ""}
+											{isDeb ? "Debian" : ""}
 										</span>
 										<a href={release.browser_download_url}>
 											{release.name}
 										</a>
 									</div>
 									<span className="text-gray-2">
-										{size} mb
+										{size} MB
 									</span>
 								</li>
 							);
