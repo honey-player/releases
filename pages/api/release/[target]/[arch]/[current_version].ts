@@ -16,10 +16,15 @@ export default async function handler(
 ) {
 	try {
 		const params = req.query;
-		const isWindowPlatform = params.target === "windows";
-		const isMacOSPlatform = params.target === "darwin";
-		const isLinuxPlatform = params.target === "linux";
+		const target = params.target ?? "";
+		const arch = params.arch ?? "";
+		const currentVersion = params.current_version
+			? `${params.current_version}`
+			: "";
 
+		const isWindowPlatform = target === "windows";
+		const isMacOSPlatform = target === "darwin";
+		const isLinuxPlatform = target === "linux";
 		if (!isWindowPlatform && !isMacOSPlatform && !isLinuxPlatform) {
 			res.status(204).send("No Content");
 			return;
@@ -36,12 +41,25 @@ export default async function handler(
 
 		const latestRelease = data.find(
 			(release) =>
+				release.tag_name.includes("app") &&
 				release.prerelease === false &&
 				release.draft === false &&
 				release.assets.length > 2
 		);
 
 		if (!latestRelease) {
+			res.status(204).send("No Content");
+			return;
+		}
+
+		const latestVersion = latestRelease.tag_name ?? "";
+		const latestVersionNumber = latestVersion.match(/\d/g)?.join("");
+		const currentVersionNumber = currentVersion.match(/\d/g)?.join("");
+		if (
+			latestVersionNumber &&
+			currentVersionNumber &&
+			currentVersionNumber > latestVersionNumber
+		) {
 			res.status(204).send("No Content");
 			return;
 		}
@@ -103,7 +121,7 @@ export default async function handler(
 			notes: latestRelease.body ?? "",
 			pub_date: latestRelease.published_at ?? "",
 		};
-		const platformName = `${params.target}-${params.arch}`;
+		const platformName = `${target}-${arch}`;
 
 		if (isWindowPlatform) {
 			res.status(200).json({
