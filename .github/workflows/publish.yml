@@ -42,7 +42,7 @@ jobs:
           node-version: 'lts/*'
           cache: 'pnpm'
       - name: Install app dependencies
-        run: pnpm i --frozen-lockfile
+        run: pnpm i
       - name: Package the server
         run: pnpm package
       - name: Bundle the build
