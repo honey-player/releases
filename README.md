@@ -1,6 +1,6 @@
 # releases
 
-Pseudo-repo for holding releases of the [Host Player](https://honeyplayer.com) desktop app and [hosting](https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/) the latest release with updater json
+Pseudo-repo for holding [releases](https://download.honeyplayer.com) of the [Honey Player](https://honeyplayer.com) desktop app and [hosting](https://www.netlify.com/with/nextjs/) the latest release with updater json
 
 ## Getting Started
 
@@ -19,8 +19,8 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 ## Releases
 
-Everything a new build is pushed to the private repo, the workflow in this PR is triggered which clones the repo, build the bundle in 3 different platform and releases a pre-release
+Everytime a new build is pushed to the private repo, the workflow in this PR is triggered, which clones the repo and build bundle in 3 different platforms, creating a pre-release. Tech-savy users can directly use the pre-release, else someone from the team check the build, updates the description and then releases it for everyone to use. Anyone can download the new version directly, else if a previous version is installed will get an update notification within the app.
 
-## Deploy on Cloudflare
+## Deploy to Netlify
 
-The easiest way to deploy this Next.js app is to use the [Cloudflare Platform](https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/#deploy-with-cloudflare-pages)
+The easiest way to deploy this Next.js app is to use the [Netlify](https://www.netlify.com/)
