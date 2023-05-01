@@ -117,7 +117,7 @@ export default async function handler(
 		}
 
 		const updater = {
-			version: latestRelease.tag_name ?? "",
+			version: latestVersion.replace(/(.*)-/, ""),
 			notes: latestRelease.body ?? "",
 			pub_date: latestRelease.published_at ?? "",
 		};
