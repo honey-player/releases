@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 
 import { LatestVersion } from "../types";
 import type { GetServerSideProps, NextPage } from "next";
+import Image from "next/image";
 
 const Home: NextPage<Partial<LatestVersion>> = ({
 	all_releases,
@@ -16,10 +17,21 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 
 	return (
 		<div className="app">
+			<Image
+				src={"/icon.png"}
+				width={300}
+				height={300}
+				alt="Icon"
+				className="iconContainer"
+			/>
 			<div className="container">
 				<>
 					<div className="flex item-center justify-between">
-						<h2>honey-player/releases</h2>
+						<h2>
+							<a className="white" href="https://honeyplayer.com">
+								honey-player/releases
+							</a>
+						</h2>
 						<span className="text-gray">{published}</span>
 					</div>
 					<ul>

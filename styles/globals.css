@@ -46,6 +46,10 @@ a:hover {
 	color: #707070;
 }
 
+.white {
+	color: white;
+}
+
 .text-sm {
 	font-size: 0.825rem;
 }
@@ -88,4 +92,14 @@ a:hover {
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
+}
+
+.iconContainer {
+	padding: 20px;
+}
+@media only screen and (max-width: 786px) {
+	.iconContainer {
+		display: none;
+		padding: 0;
+	}
 }

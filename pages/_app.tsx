@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -8,5 +10,16 @@ import type { AppProps } from "next/app";
 dayjs.extend(relativeTime);
 
 export default function App({ Component, pageProps }: AppProps) {
-	return <Component {...pageProps} />;
+	return (
+		<>
+			<Head>
+				<title>Download || Honey Player</title>
+				<meta
+					name="description"
+					content="Download the latest release of Honey Player"
+				/>
+			</Head>
+			<Component {...pageProps} />
+		</>
+	);
 }
