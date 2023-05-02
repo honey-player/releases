@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -9,11 +12,24 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 	all_releases,
 	release_notes,
 	tag_name,
-	author,
 	published_at,
 	releases,
 }) => {
 	const published = dayjs(published_at).fromNow();
+
+	const router = useRouter();
+	const { extension } = router.query;
+
+	useEffect(() => {
+		if (extension && releases && releases.length !== 0) {
+			const release = releases.find(
+				(r) => ~r.browser_download_url.indexOf(`.${extension}`)
+			);
+			if (release) {
+				window.location.href = release.browser_download_url;
+			}
+		}
+	}, [extension, releases]);
 
 	return (
 		<div className="app">
