@@ -9,20 +9,10 @@ export default async function handler(
 	res: NextApiResponse<LatestVersion>
 	// res: NextApiResponse<any>
 ) {
-	const { data } = await octokit.request(
-		"GET /repos/{owner}/{repo}/releases",
-		{
-			owner: "honey-player",
-			repo: "releases",
-		}
-	);
-
-	const latestRelease = data.find(
-		(release) =>
-			release.prerelease === false &&
-			release.draft === false &&
-			release.assets.length > 2
-	);
+	const { data: latestRelease } = await octokit.rest.repos.getLatestRelease({
+		owner: "honey-player",
+		repo: "releases",
+	});
 
 	if (!latestRelease) {
 		res.status(204).json({
