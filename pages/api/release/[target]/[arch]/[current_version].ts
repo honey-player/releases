@@ -2,9 +2,6 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import semverGt from "semver/functions/gt";
-import semverValid from "semver/functions/valid";
-
 import { octokit } from "../../../../../lib/git";
 
 export default async function handler(
@@ -30,19 +27,19 @@ export default async function handler(
 			.toLowerCase()
 			.split("v")
 			.pop();
-		if (!latestVersion || !semverValid(latestVersion)) {
-			res.status(204).send("No Content");
-			return;
-		}
+		// if (!latestVersion || !semverValid(latestVersion)) {
+		// 	res.status(204).send("No Content");
+		// 	return;
+		// }
 
 		const currentVersion =
 			`${params.current_version}`.toLowerCase().split("v").pop() ?? "";
 
-		const shouldUpdate = semverGt(latestVersion, currentVersion);
-		if (!shouldUpdate) {
-			res.status(204).send("No Content");
-			return;
-		}
+		// const shouldUpdate = semverGt(latestVersion, currentVersion);
+		// if (!shouldUpdate) {
+		// 	res.status(204).send("No Content");
+		// 	return;
+		// }
 
 		const updater = latestRelease.assets.find((asset) =>
 			/.json$/.test(asset.browser_download_url)
