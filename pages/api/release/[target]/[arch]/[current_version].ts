@@ -2,7 +2,7 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import semver from "semver";
+import { compare, validate } from "compare-versions";
 
 import { octokit } from "../../../../../lib/git";
 
@@ -29,7 +29,7 @@ export default async function handler(
 			.toLowerCase()
 			.split("v")
 			.pop();
-		if (!latestVersion || !semver.valid(latestVersion)) {
+		if (!latestVersion || !validate(latestVersion)) {
 			res.status(204).send("No Content");
 			return;
 		}
@@ -37,7 +37,7 @@ export default async function handler(
 		const currentVersion =
 			`${params.current_version}`.toLowerCase().split("v").pop() ?? "";
 
-		const shouldUpdate = semver.gt(latestVersion, currentVersion);
+		const shouldUpdate = compare(latestVersion, currentVersion, ">");
 		if (!shouldUpdate) {
 			res.status(204).send("No Content");
 			return;
