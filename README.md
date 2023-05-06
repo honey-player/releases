@@ -1,4 +1,4 @@
-# releases
+# Releases
 
 Pseudo-repo for holding [releases](https://download.honeyplayer.com) of the [Honey Player](https://honeyplayer.com) desktop app and [hosting](https://www.netlify.com/with/nextjs/) the latest release with updater json
 

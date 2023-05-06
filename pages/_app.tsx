@@ -13,7 +13,10 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>
-				<title>Download || Honey Player</title>
+				<title>
+					Download || Honey Player - The modern media player for
+					friends
+				</title>
 				<meta
 					name="description"
 					content="Download the latest release of Honey Player"

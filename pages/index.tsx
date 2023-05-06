@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import axios from "axios";
@@ -15,17 +15,25 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 	published_at,
 	releases,
 }) => {
+	const [currentUrl, setCurrentUrl] = useState("");
 	const published = dayjs(published_at).fromNow();
 
 	const router = useRouter();
 	const { extension } = router.query;
 
+	function openCurrentUrl() {
+		if (currentUrl) {
+			window.location.href = currentUrl;
+		}
+	}
+
 	useEffect(() => {
-		if (extension && releases && releases.length !== 0) {
+		if (!currentUrl && extension && releases && releases.length !== 0) {
 			const release = releases.find(
 				(r) => ~r.browser_download_url.indexOf(`.${extension}`)
 			);
-			if (release) {
+			if (release?.browser_download_url) {
+				setCurrentUrl(release.browser_download_url);
 				window.location.href = release.browser_download_url;
 			}
 		}
@@ -35,8 +43,8 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 		<div className="app">
 			<Image
 				src={"/icon.png"}
-				width={300}
-				height={300}
+				width={260}
+				height={260}
 				alt="Icon"
 				className="iconContainer"
 			/>
@@ -89,7 +97,14 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 											{isLinux ? "Linux" : ""}
 											{isDeb ? "Debian" : ""}
 										</span>
-										<a href={release.browser_download_url}>
+										<a
+											href={release.browser_download_url}
+											onClick={() =>
+												setCurrentUrl(
+													release.browser_download_url
+												)
+											}
+										>
 											{release.name}
 										</a>
 									</div>
@@ -102,7 +117,12 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 					</ul>
 					<div className="flex item-center justify-between">
 						<div className="flex item-center gap-2">
-							<h4 className="version button-70">{tag_name}</h4>
+							<h4
+								className="version button-70"
+								onClick={openCurrentUrl}
+							>
+								{tag_name}
+							</h4>
 							<a className="text-gray-3" href={release_notes}>
 								Release Note
 							</a>
@@ -111,6 +131,11 @@ const Home: NextPage<Partial<LatestVersion>> = ({
 							All Releases
 						</a>
 					</div>
+					{currentUrl && (
+						<h3 className="text-gray-3">{`Downloading ${
+							extension ?? ""
+						}!`}</h3>
+					)}
 				</>
 			</div>
 		</div>
